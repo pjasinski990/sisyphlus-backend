@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
 import { v4 as uuid } from 'uuid';
-import { Middleware } from '@/feature/auth/entities/middleware';
-import { Logger } from '@/shared/ports/out/logger';
-import { logger } from '@/shared/interface/controllers/logging-controller';
+import { Middleware } from '@/feature/auth/entity/middleware';
+import { Logger } from '@/shared/feature/logging/application/port/out/logger';
+import { logger } from '@/shared/feature/logging/interface/controller/logging-controller';
 
 export const accessLogger: Middleware = (req: Request, res: Response, next: NextFunction): void => {
     const requestId = (req.headers['x-request-id'] as string) ?? uuid();

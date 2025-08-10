@@ -1,5 +1,5 @@
-import { UserRepo } from '@/feature/auth/application/ports/out/user-repo';
-import { User } from '@/feature/auth/entities/user';
+import { UserRepo } from '@/feature/auth/application/port/out/user-repo';
+import { User } from '@/feature/auth/entity/user';
 import path from 'path';
 import { promises as fs } from 'fs';
 

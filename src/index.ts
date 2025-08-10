@@ -1,11 +1,11 @@
 import express from 'express';
 import { authRoutes } from '@/feature/auth/interface/web/auth-routes';
 import { expressErrorHandler } from '@/middleware/express-error-handler';
-import { BuildAuthMiddlewareUseCase } from '@/feature/auth/application/use-cases/build-auth-middleware';
+import { BuildAuthMiddlewareUseCase } from '@/feature/auth/application/use-case/build-auth-middleware';
 import cors from 'cors';
-import { extractAccessTokenFromCookie, verifyJwtAccessToken } from '@/feature/auth/application/services/access-token-strategies';
+import { extractAccessTokenFromCookie, verifyJwtAccessToken } from '@/feature/auth/application/service/access-token-strategies';
 import cookieParser from 'cookie-parser';
-import { logger } from '@/shared/interface/controllers/logging-controller';
+import { logger } from '@/shared/feature/logging/interface/controller/logging-controller';
 import { accessLogger } from '@/middleware/access-logs';
 
 const app = express();

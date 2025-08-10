@@ -1,9 +1,9 @@
 import { Request, Router } from 'express';
-import { LoginRequest, LoginRequestSchema } from '@/feature/auth/entities/login-request';
-import { RegisterRequest, RegisterRequestSchema } from '@/feature/auth/entities/register-request';
-import { UnauthorizedError, ValidationError } from '@/shared/entities/http-errors';
-import { authController } from '@/feature/auth/interface/controllers/auth-controller';
-import { getAuthDescription } from '@/feature/auth/application/services/get-auth-description';
+import { LoginRequest, LoginRequestSchema } from '@/feature/auth/entity/login-request';
+import { RegisterRequest, RegisterRequestSchema } from '@/feature/auth/entity/register-request';
+import { UnauthorizedError, ValidationError } from '@/shared/util/entity/http-error';
+import { authController } from '@/feature/auth/interface/controller/auth-controller';
+import { getAuthDescription } from '@/feature/auth/application/service/get-auth-description';
 
 export const authRoutes = Router();
 
@@ -11,7 +11,7 @@ authRoutes.post('/login', async (req, res) => {
     const { email, password } = parseLoginData(req);
     const loginResult = await authController.onLoginAttempt(email, password);
     if (!loginResult.ok) {
-        throw new ValidationError(`Invalid login details: ${loginResult.error}`);
+        throw new ValidationError(`Error: ${loginResult.error}`);
     }
     const authDescription = getAuthDescription();
     await authDescription.setAccessToken(loginResult.value.accessToken, res);
@@ -53,7 +53,7 @@ authRoutes.post('/register', async (req, res) => {
     const { email, password } = parseRegisterData(req);
     const registerResult = await authController.onRegisterAttempt(email, password);
     if (!registerResult.ok) {
-        throw new ValidationError(`Invalid register details: ${registerResult.error}`);
+        throw new ValidationError(`Error: ${registerResult.error}`);
     }
 
     res.json({ message: 'Register successful. Please proceed to login.' });

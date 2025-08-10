@@ -1,5 +1,5 @@
-import { UserRepo } from '@/feature/auth/application/ports/out/user-repo';
-import { User } from '@/feature/auth/entities/user';
+import { UserRepo } from '@/feature/auth/application/port/out/user-repo';
+import { User } from '@/feature/auth/entity/user';
 
 export class InMemoryUserRepo implements UserRepo {
     users: User[] = [];

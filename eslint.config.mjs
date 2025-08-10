@@ -24,7 +24,7 @@ const config = [
     {
         rules: {
             'no-restricted-imports': ['error', {
-                'patterns': ['**/feature/quiz/entities/**']
+                'patterns': ['**/feature/quiz/entity/**']
             }],
             '@/semi': ['error', 'always'],
             '@/indent': ['error', 4, { SwitchCase: 1 }],

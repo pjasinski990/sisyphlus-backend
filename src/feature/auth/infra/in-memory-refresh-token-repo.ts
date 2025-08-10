@@ -1,5 +1,5 @@
-import { RefreshTokenRepo } from '@/feature/auth/application/ports/out/refresh-token-repo';
-import { RefreshToken } from '@/feature/auth/entities/refresh-token';
+import { RefreshTokenRepo } from '@/feature/auth/application/port/out/refresh-token-repo';
+import { RefreshToken } from '@/feature/auth/entity/refresh-token';
 
 export class InMemoryRefreshTokenRepo implements RefreshTokenRepo {
     tokens: RefreshToken[] = [];

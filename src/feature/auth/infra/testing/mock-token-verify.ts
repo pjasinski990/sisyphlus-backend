@@ -1,6 +1,6 @@
-import { JwtAuthenticatedData, VerifyAccessTokenStrategy } from '@/feature/auth/entities/auth-strategy';
-import { AccessTokenPayload } from '@/feature/auth/entities/access-token-payload';
-import { nok, ok } from '@/shared/entities/result';
+import { JwtAuthenticatedData, VerifyAccessTokenStrategy } from '@/feature/auth/entity/auth-strategy';
+import { AccessTokenPayload } from '@/feature/auth/entity/access-token-payload';
+import { nok, ok } from '@/shared/util/entity/result';
 
 export function returnsOkAccessTokenWith(payload: AccessTokenPayload): VerifyAccessTokenStrategy {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars

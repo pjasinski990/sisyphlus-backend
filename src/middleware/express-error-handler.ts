@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
-import { HttpError } from '@/shared/entities/http-errors';
-import { logger } from '@/shared/interface/controllers/logging-controller';
+import { HttpError } from '@/shared/util/entity/http-error';
+import { logger } from '@/shared/feature/logging/interface/controller/logging-controller';
 
 export const expressErrorHandler = ((err: unknown, req: Request, res: Response, _next: NextFunction) => {
     void req;
@@ -19,4 +19,3 @@ export const expressErrorHandler = ((err: unknown, req: Request, res: Response, 
         error: err instanceof Error ? err.message : 'Internal server error',
     });
 });
-

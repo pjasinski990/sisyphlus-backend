@@ -4,22 +4,23 @@ import { RegisterRequest, RegisterRequestSchema } from '@/feature/auth/entity/re
 import { UnauthorizedError, ValidationError } from '@/shared/util/entity/http-error';
 import { authController } from '@/feature/auth/interface/controller/auth-controller';
 import { getAuthDescription } from '@/feature/auth/application/service/get-auth-description';
+import { asyncWrapper } from '@/shared/util/async-wrapper';
 
 export const authRoutes = Router();
 
-authRoutes.post('/login', async (req, res) => {
+authRoutes.post('/login', asyncWrapper(async (req, res) => {
     const { email, password } = parseLoginData(req);
     const loginResult = await authController.onLoginAttempt(email, password);
     if (!loginResult.ok) {
-        throw new ValidationError(`Error: ${loginResult.error}`);
+        throw new ValidationError(`${loginResult.error}`);
     }
     const authDescription = getAuthDescription();
     await authDescription.setAccessToken(loginResult.value.accessToken, res);
     await authDescription.setRefreshToken(loginResult.value.refreshToken, res);
     res.json({ message: 'Login successful' });
-});
+}));
 
-authRoutes.post('/logout', async (req, res) => {
+authRoutes.post('/logout', asyncWrapper(async (req, res) => {
     const authDescription = getAuthDescription();
     const at = await authDescription.extractAccessToken(req) ?? '';
     const rt = await authDescription.extractRefreshToken(req) ?? '';
@@ -31,9 +32,9 @@ authRoutes.post('/logout', async (req, res) => {
         throw new ValidationError(result.error);
     }
     res.json({ message: result.value });
-});
+}));
 
-authRoutes.get('/refresh', async (req, res) => {
+authRoutes.get('/refresh', asyncWrapper(async (req, res) => {
     const rt = await getAuthDescription().extractRefreshToken(req);
     if (!rt) {
         throw new UnauthorizedError('Missing refresh token. Please log in again.');
@@ -47,19 +48,19 @@ authRoutes.get('/refresh', async (req, res) => {
     await authDescription.setAccessToken(refreshResult.value.accessToken, res);
     await authDescription.setRefreshToken(refreshResult.value.refreshToken, res);
     res.json({ message: 'Tokens refreshed.' });
-});
+}));
 
-authRoutes.post('/register', async (req, res) => {
+authRoutes.post('/register', asyncWrapper(async (req, res) => {
     const { email, password } = parseRegisterData(req);
     const registerResult = await authController.onRegisterAttempt(email, password);
     if (!registerResult.ok) {
-        throw new ValidationError(`Error: ${registerResult.error}`);
+        throw new ValidationError(`${registerResult.error}`);
     }
 
     res.json({ message: 'Register successful. Please proceed to login.' });
-});
+}));
 
-authRoutes.get('/me', async (req, res) => {
+authRoutes.get('/me', asyncWrapper(async (req, res) => {
     const at = await getAuthDescription().extractAccessToken(req);
     if (!at) {
         throw new UnauthorizedError('Missing token. Please log in again.');
@@ -69,7 +70,7 @@ authRoutes.get('/me', async (req, res) => {
         throw new UnauthorizedError(`Error processing "me" request: ${meResult.error}`);
     }
     res.json( { user: meResult.value });
-});
+}));
 
 function parseLoginData(req: Request): LoginRequest {
     const parseResult = LoginRequestSchema.safeParse(req.body);

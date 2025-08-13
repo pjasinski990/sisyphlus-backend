@@ -7,6 +7,7 @@ import { extractAccessTokenFromCookie, verifyJwtAccessToken } from '@/feature/au
 import cookieParser from 'cookie-parser';
 import { logger } from '@/shared/feature/logging/interface/controller/logging-controller';
 import { accessLogger } from '@/middleware/access-logs';
+import { taskRoutes } from '@/feature/task/interface/web/task-routes';
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -20,9 +21,10 @@ app.use(cors({
 }));
 
 app.use('/api/auth', authRoutes);
-
 const auth = new BuildAuthMiddlewareUseCase().execute(extractAccessTokenFromCookie, verifyJwtAccessToken);
 app.use(auth);
+
+app.use('/api/tasks', taskRoutes);
 
 app.use(expressErrorHandler);
 

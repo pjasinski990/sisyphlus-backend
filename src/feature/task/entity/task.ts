@@ -33,31 +33,27 @@ export const BaseTaskSchema = z
     .strict();
 
 export const SimpleTaskSchema = BaseTaskSchema.merge(
-    z
-        .object({
-            category: z.literal('simple'),
-            status: TaskStatusSchema,
-            finishedAt: ISODateTime.optional(),
-        })
-        .strict()
+    z.object({
+        category: z.literal('simple'),
+        status: TaskStatusSchema,
+        finishedAt: ISODateTime.optional(),
+    }).strict()
 );
 
 export const RecurringTaskSchema = BaseTaskSchema.merge(
-    z
-        .object({
-            category: z.literal('recurring'),
-            status: FlowStatusSchema,
-            schedule: ScheduleSchema,
-            defaultDurationMin: z.number().int().nonnegative().optional(),
-            preferredWindow: z
-                .object({
-                    from: HHmm,
-                    to: HHmm,
-                })
-                .strict()
-                .optional(),
-        })
-        .strict()
+    z.object({
+        category: z.literal('recurring'),
+        status: FlowStatusSchema,
+        schedule: ScheduleSchema,
+        defaultDurationMin: z.number().int().nonnegative().optional(),
+        preferredWindow: z
+            .object({
+                from: HHmm,
+                to: HHmm,
+            })
+            .strict()
+            .optional(),
+    }).strict()
 );
 
 export const TaskSchema = z.discriminatedUnion('category', [

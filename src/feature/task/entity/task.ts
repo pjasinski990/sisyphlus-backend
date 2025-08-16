@@ -25,8 +25,8 @@ export const BaseTaskSchema = z
         spentMin: z.number().int().nonnegative().optional(),
         tags: z.array(z.string()),
         context: z.string().optional(),
-        createdAt: ISODateTime,
-        updatedAt: ISODateTime,
+        createdAt: ISODateTime.optional(),
+        updatedAt: ISODateTime.optional(),
         parentId: z.string().optional(),
         anchor: AnchorSchema.optional(),
     })

@@ -9,8 +9,14 @@ export class CreateTaskUseCase implements CreateTask {
     ) { }
 
     async execute(task: Task): Promise<Result<Task, string>> {
+        const updatedTask: Task = {
+            ...task,
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString()
+        };
+
         try {
-            const res = await this.repo.upsert(task);
+            const res = await this.repo.upsert(updatedTask);
             return ok(res);
         } catch (error: unknown) {
             if (error instanceof Error) {

@@ -7,10 +7,8 @@ export const TaskStatusSchema = z.enum(['todo', 'done', 'archived']);
 export const EnergyLevelSchema = z.enum(['low', 'medium', 'high']);
 export const FlowStatusSchema = z.enum(['active', 'paused', 'archived']);
 
-export const ISODateTime = z.string().datetime(); // ISO 8601 date-time
-export const HHmm = z
-    .string()
-    .regex(/^([01]\d|2[0-3]):[0-5]\d$/, 'Expected HH:mm');
+export const ISODateTime = z.string().datetime();
+export const HHmm = z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/, 'Expected HH:mm');
 
 export const BaseTaskSchema = z
     .object({

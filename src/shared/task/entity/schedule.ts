@@ -1,17 +1,15 @@
 import { z } from 'zod';
 
-export const YYYYMMDD = z
-    .string()
-    .regex(/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/, 'Expected YYYY-MM-DD');
+const YYYY_MM_DD = /^\d{4}-\d{2}-\d{2}$/;
 
 export const ScheduleSchema = z
     .object({
         rrule: z.string(),
         timezone: z.string(),
-        additionalDates: z.array(YYYYMMDD),
-        excludedDates: z.array(YYYYMMDD),
-        beginDate: YYYYMMDD,
-        untilDate: YYYYMMDD.optional(),
+        additionalDates: z.array(z.string().regex(YYYY_MM_DD)),
+        excludedDates: z.array(z.string().regex(YYYY_MM_DD)),
+        beginDate: z.string().regex(YYYY_MM_DD),
+        untilDate: z.string().regex(YYYY_MM_DD).optional(),
     })
     .strict()
     .superRefine((val, ctx) => {

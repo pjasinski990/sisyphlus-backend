@@ -1,11 +1,11 @@
 import { Request, Router } from 'express';
 import { UnauthorizedError, ValidationError } from '@/shared/util/entity/http-error';
-import { Task, TaskSchema } from '@/feature/task/entity/task';
-import { taskController } from '@/feature/task/interface/controller/task-controller';
+import { Task, TaskSchema } from '@/shared/task/entity/task';
+import { taskController } from '@/shared/task/interface/controller/task-controller';
 
-export const taskRoutes = Router();
+export const inboxRoutes = Router();
 
-taskRoutes.post('/', async (req, res) => {
+inboxRoutes.post('/', async (req, res) => {
     const task: Task = parseNewTaskRequest(req);
 
     const result = await taskController.handleCreateNewTask(task);
@@ -15,7 +15,7 @@ taskRoutes.post('/', async (req, res) => {
     res.json(result.value);
 });
 
-taskRoutes.get('/', async (req, res) => {
+inboxRoutes.get('/', async (req, res) => {
     const userId = req.authToken?.userId;
     if (!userId) {
         throw new UnauthorizedError();

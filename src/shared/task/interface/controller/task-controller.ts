@@ -1,10 +1,10 @@
-import { CreateTask } from '@/feature/task/application/ports/in/create-task';
-import { CreateTaskUseCase } from '@/feature/task/application/use-case/create-task-use-case';
-import { InMemoryTaskRepo } from '@/feature/task/infra/in-memory-task-repo';
-import { Task } from '@/feature/task/entity/task';
+import { CreateTask } from '@/feature/inbox/application/ports/in/create-task';
+import { CreateTaskUseCase } from '@/feature/inbox/application/use-case/create-task-use-case';
+import { InMemoryTaskRepo } from '@/shared/task/infra/in-memory-task-repo';
+import { Task } from '@/shared/task/entity/task';
 import { Result } from '@/shared/util/entity/result';
-import { GetInboxTasks } from '@/feature/task/application/ports/in/get-inbox-tasks';
-import { GetInboxTasksUseCase } from '@/feature/task/application/use-case/get-inbox-tasks-use-case';
+import { GetInboxTasks } from '@/feature/inbox/application/ports/in/get-inbox-tasks';
+import { GetInboxTasksUseCase } from '@/feature/inbox/application/use-case/get-inbox-tasks-use-case';
 
 export class TaskController {
     constructor(

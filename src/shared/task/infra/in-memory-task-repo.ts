@@ -1,5 +1,5 @@
-import { TaskRepo } from '@/feature/task/application/ports/out/task-repo';
-import { Task } from '@/feature/task/entity/task';
+import { TaskRepo } from '@/shared/task/application/ports/out/task-repo';
+import { Task } from '@/shared/task/entity/task';
 
 export class InMemoryTaskRepo implements TaskRepo {
     tasks: Task[] = [];

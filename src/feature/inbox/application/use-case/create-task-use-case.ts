@@ -1,6 +1,6 @@
-import { CreateTask } from '@/feature/task/application/ports/in/create-task';
-import { Task } from '@/feature/task/entity/task';
-import { TaskRepo } from '@/feature/task/application/ports/out/task-repo';
+import { CreateTask } from '@/feature/inbox/application/ports/in/create-task';
+import { Task } from '@/shared/task/entity/task';
+import { TaskRepo } from '@/shared/task/application/ports/out/task-repo';
 import { nok, ok, Result } from '@/shared/util/entity/result';
 
 export class CreateTaskUseCase implements CreateTask {

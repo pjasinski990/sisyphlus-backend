@@ -13,10 +13,12 @@ export class GetDayPlanUseCase implements GetDayPlan {
     async execute(localDate: string, userId: string): Promise<Result<DayPlan, string>> {
         const retrieved = await this.repo.getByLocalDate(localDate);
         if (retrieved?.length === 0) {
-            return buildNewDayPlan(localDate, userId);
+            const newPlan = await buildNewDayPlan(localDate, userId);
+            return ok(newPlan);
         }
 
         if (retrieved?.length === 1) {
+            // TODO refresh updated recurring tasks
             return ok(retrieved[0]);
         }
 
@@ -24,11 +26,10 @@ export class GetDayPlanUseCase implements GetDayPlan {
     }
 }
 
-async function buildNewDayPlan(localDate: string, userId: string): Promise<Result<DayPlan, string>> {
+async function buildNewDayPlan(localDate: string, userId: string): Promise<DayPlan> {
     const empty = buildEmptyDayPlan(localDate, userId);
     const workflows = await discoverWorkflowsLandingAt(localDate);
-    const withRecurringTasks = await populate(empty, workflows);
-    return ok(withRecurringTasks);
+    return populate(empty, workflows);
 }
 
 async function discoverWorkflowsLandingAt(localDate: string): Promise<Task[]> {

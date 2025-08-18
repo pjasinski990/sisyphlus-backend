@@ -16,4 +16,8 @@ export class InMemoryTaskRepo implements TaskRepo {
     async getByUserId(userId: string): Promise<Task[]> {
         return this.tasks.filter(t => t.userId === userId);
     }
+
+    async getById(id: string): Promise<Task | null> {
+        return this.tasks.find(t => t.id === id) ?? null;
+    }
 }

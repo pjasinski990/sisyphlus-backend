@@ -12,14 +12,17 @@ export class GetDayPlanUseCase implements GetDayPlan {
 
     async execute(localDate: string, userId: string): Promise<Result<DayPlan, string>> {
         const retrieved = await this.repo.getByLocalDate(localDate);
-        if (retrieved?.length === 0) {
+        const forUser = retrieved?.filter(plan => plan.userId === userId);
+
+        if (forUser?.length === 0) {
             const newPlan = await buildNewDayPlan(localDate, userId);
+            await this.repo.upsert(newPlan);
             return ok(newPlan);
         }
 
-        if (retrieved?.length === 1) {
+        if (forUser?.length === 1) {
             // TODO refresh updated recurring tasks
-            return ok(retrieved[0]);
+            return ok(forUser[0]);
         }
 
         else return nok('More than one plan for this day exists! Not supported yet.');

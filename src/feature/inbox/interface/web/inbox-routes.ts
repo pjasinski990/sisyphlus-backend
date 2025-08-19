@@ -28,6 +28,28 @@ inboxRoutes.get('/', async (req, res) => {
     res.json(result.value);
 });
 
+inboxRoutes.get('/', async (req, res) => {
+    const userId = req.authToken?.userId;
+    if (!userId) throw new UnauthorizedError();
+
+    const raw = req.query.ids;
+    const ids =
+        Array.isArray(raw) ? raw
+            : typeof raw === 'string' && raw.length ? [raw]
+                : [];
+
+    if (ids.length === 0) {
+        res.json([]);
+        return;
+    }
+
+    // TODO proper type validation
+    const unique = [...new Set(ids)] as string[];
+    const result = await taskController.handleGetByIds(userId, unique);
+    if (!result.ok) throw new ValidationError(`${result.error}`);
+    res.json(result.value);
+});
+
 function parseNewTaskRequest(req: Request): Task {
     const parseResult = TaskSchema.safeParse(req.body);
     if (!parseResult.success) {

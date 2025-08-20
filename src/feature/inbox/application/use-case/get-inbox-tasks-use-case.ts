@@ -1,7 +1,7 @@
 import { GetInboxTasks } from '@/feature/inbox/application/ports/in/get-inbox-tasks';
 import { AsyncResult, ok } from '@/shared/util/entity/result';
-import { TaskRepo } from '@/shared/task/application/ports/out/task-repo';
-import { Task } from '@/shared/task/entity/task';
+import { TaskRepo } from '@/shared/feature/task/application/ports/out/task-repo';
+import { Task } from '@/shared/feature/task/entity/task';
 
 export class GetInboxTasksUseCase implements GetInboxTasks {
     constructor(

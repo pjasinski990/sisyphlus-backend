@@ -5,7 +5,7 @@ import { GetDayPlanUseCase } from '@/feature/day-plan/application/use-case/get-d
 import { InMemoryDayPlanRepo } from '@/feature/day-plan/infra/in-memory-day-plan-repo';
 import { ScheduleTask } from '@/feature/day-plan/application/port/in/schedule-task';
 import { ScheduleTaskUseCase } from '@/feature/day-plan/application/use-case/schedule-task-use-case';
-import { JsonTaskRepo } from '@/shared/task/infra/json-task-repo';
+import { JsonTaskRepo } from '@/shared/feature/task/infra/json-task-repo';
 
 export class DayPlanController {
     constructor(

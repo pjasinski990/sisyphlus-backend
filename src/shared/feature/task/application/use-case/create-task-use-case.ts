@@ -1,6 +1,6 @@
-import { CreateTask } from '@/shared/task/application/ports/in/create-task';
-import { Task } from '@/shared/task/entity/task';
-import { TaskRepo } from '@/shared/task/application/ports/out/task-repo';
+import { CreateTask } from '@/shared/feature/task/application/ports/in/create-task';
+import { Task } from '@/shared/feature/task/entity/task';
+import { TaskRepo } from '@/shared/feature/task/application/ports/out/task-repo';
 import { AsyncResult, nok, ok } from '@/shared/util/entity/result';
 
 export class CreateTaskUseCase implements CreateTask {

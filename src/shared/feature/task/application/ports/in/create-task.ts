@@ -1,4 +1,4 @@
-import { Task } from '@/shared/task/entity/task';
+import { Task } from '@/shared/feature/task/entity/task';
 import { AsyncResult } from '@/shared/util/entity/result';
 
 export interface CreateTask {

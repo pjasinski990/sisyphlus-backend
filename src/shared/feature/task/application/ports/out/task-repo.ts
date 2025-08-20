@@ -1,4 +1,4 @@
-import { Task } from '@/shared/task/entity/task';
+import { Task } from '@/shared/feature/task/entity/task';
 
 export interface TaskRepo {
     upsert(task: Task): Promise<Task>;

@@ -1,9 +1,9 @@
-import { CreateTask } from '@/shared/task/application/ports/in/create-task';
-import { CreateTaskUseCase } from '@/shared/task/application/use-case/create-task-use-case';
-import { Task } from '@/shared/task/entity/task';
+import { CreateTask } from '@/shared/feature/task/application/ports/in/create-task';
+import { CreateTaskUseCase } from '@/shared/feature/task/application/use-case/create-task-use-case';
+import { Task } from '@/shared/feature/task/entity/task';
 import { AsyncResult, ok } from '@/shared/util/entity/result';
-import { JsonTaskRepo } from '@/shared/task/infra/json-task-repo';
-import { TaskRepo } from '@/shared/task/application/ports/out/task-repo';
+import { JsonTaskRepo } from '@/shared/feature/task/infra/json-task-repo';
+import { TaskRepo } from '@/shared/feature/task/application/ports/out/task-repo';
 import { logger } from '@/shared/feature/logging/interface/controller/logging-controller';
 
 export class TaskController {

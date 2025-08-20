@@ -1,5 +1,5 @@
 import { UnauthorizedError, ValidationError } from '@/shared/util/entity/http-error';
-import { taskController } from '@/shared/task/interface/controller/task-controller';
+import { taskController } from '@/shared/feature/task/interface/controller/task-controller';
 import { Router } from 'express';
 
 export const taskRoutes = Router();
@@ -9,10 +9,7 @@ taskRoutes.get('/', async (req, res) => {
     if (!userId) throw new UnauthorizedError();
 
     const raw = req.query.ids;
-    if (!Array.isArray(raw)) {
-        throw new ValidationError('ids must be an array');
-    }
-    const ids = raw;
+    const ids = Array.isArray(raw) ? raw : [raw];
     if (ids.length === 0) {
         res.json([]);
         return;

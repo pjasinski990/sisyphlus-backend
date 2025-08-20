@@ -1,5 +1,5 @@
-import { TaskRepo } from '@/shared/task/application/ports/out/task-repo';
-import { Task } from '@/shared/task/entity/task';
+import { TaskRepo } from '@/shared/feature/task/application/ports/out/task-repo';
+import { Task } from '@/shared/feature/task/entity/task';
 import path from 'path';
 import { promises as fs } from 'fs';
 

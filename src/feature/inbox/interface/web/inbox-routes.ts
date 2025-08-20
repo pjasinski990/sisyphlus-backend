@@ -1,7 +1,7 @@
 import { Request, Router } from 'express';
 import { UnauthorizedError, ValidationError } from '@/shared/util/entity/http-error';
-import { Task, TaskSchema } from '@/shared/task/entity/task';
-import { taskController } from '@/shared/task/interface/controller/task-controller';
+import { Task, TaskSchema } from '@/shared/feature/task/entity/task';
+import { taskController } from '@/shared/feature/task/interface/controller/task-controller';
 import { inboxController } from '@/feature/inbox/interface/controller/inbox-controller';
 
 export const inboxRoutes = Router();

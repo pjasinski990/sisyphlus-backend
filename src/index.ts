@@ -9,7 +9,7 @@ import { logger } from '@/shared/feature/logging/interface/controller/logging-co
 import { accessLogger } from '@/middleware/access-logs';
 import { inboxRoutes } from '@/feature/inbox/interface/web/inbox-routes';
 import { dayPlanRoutes } from '@/feature/day-plan/interface/web/day-plan-routes';
-import { taskRoutes } from '@/shared/task/interface/web/task-routes';
+import { taskRoutes } from '@/shared/feature/task/interface/web/task-routes';
 
 const app = express();
 const port = process.env.PORT || 5000;

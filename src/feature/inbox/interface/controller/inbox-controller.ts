@@ -1,8 +1,8 @@
-import { Task } from '@/shared/task/entity/task';
+import { Task } from '@/shared/feature/task/entity/task';
 import { AsyncResult } from '@/shared/util/entity/result';
 import { GetInboxTasks } from '@/feature/inbox/application/ports/in/get-inbox-tasks';
 import { GetInboxTasksUseCase } from '@/feature/inbox/application/use-case/get-inbox-tasks-use-case';
-import { JsonTaskRepo } from '@/shared/task/infra/json-task-repo';
+import { JsonTaskRepo } from '@/shared/feature/task/infra/json-task-repo';
 
 export class InboxController {
     constructor(

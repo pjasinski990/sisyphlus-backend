@@ -1,4 +1,4 @@
-import { CreateTask } from '@/feature/inbox/application/ports/in/create-task';
+import { CreateTask } from '@/shared/task/application/ports/in/create-task';
 import { Task } from '@/shared/task/entity/task';
 import { TaskRepo } from '@/shared/task/application/ports/out/task-repo';
 import { nok, ok, Result } from '@/shared/util/entity/result';

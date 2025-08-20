@@ -18,7 +18,7 @@ dayPlanRoutes.get('/:localDate', async (req, res) => {
     res.json(result.value);
 });
 
-dayPlanRoutes.post('/:localDate/schedule', async (req, res) => {
+dayPlanRoutes.post('/:localDate/entries', async (req, res) => {
     const userId = req.authToken?.userId;
     if (!userId) {
         throw new UnauthorizedError();

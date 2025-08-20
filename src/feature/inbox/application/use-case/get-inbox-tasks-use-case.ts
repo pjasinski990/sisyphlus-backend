@@ -10,7 +10,13 @@ export class GetInboxTasksUseCase implements GetInboxTasks {
 
     async execute(userId: string): Promise<Result<Task[], string>> {
         const tasks: Task[] = await this.repo.getByUserId(userId);
-        const inboxTasks = tasks.filter(t => t.status === 'todo');
+        const inboxTasks = tasks.filter(t => {
+            if (t.category === 'simple') {
+                return !t.plannedFor;
+            } else {
+                return t.status === 'active';
+            }
+        });
         return ok(inboxTasks);
     }
 }

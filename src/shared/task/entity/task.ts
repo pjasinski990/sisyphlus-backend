@@ -5,7 +5,7 @@ import { ScheduleSchema, Schedule } from './schedule';
 export const TaskCategorySchema = z.enum(['simple', 'recurring']);
 export const TaskStatusSchema = z.enum(['todo', 'done', 'archived']);
 export const EnergyLevelSchema = z.enum(['low', 'medium', 'high']);
-export const FlowStatusSchema = z.enum(['active', 'paused', 'archived']);
+export const FlowStatusSchema = z.enum(['todo', 'active', 'paused', 'archived']);
 
 export const ISODateTime = z.string().datetime();
 export const HHmm = z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/, 'Expected HH:mm');
@@ -34,6 +34,7 @@ export const SimpleTaskSchema = BaseTaskSchema.merge(
     z.object({
         category: z.literal('simple'),
         status: TaskStatusSchema,
+        plannedFor: z.string().optional(),
         finishedAt: ISODateTime.optional(),
     }).strict()
 );

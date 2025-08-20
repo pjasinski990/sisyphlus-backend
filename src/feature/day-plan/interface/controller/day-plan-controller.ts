@@ -3,9 +3,9 @@ import { DayPlan } from '@/feature/day-plan/entity/day-plan';
 import { Result } from '@/shared/util/entity/result';
 import { GetDayPlanUseCase } from '@/feature/day-plan/application/use-case/get-day-plan-use-case';
 import { InMemoryDayPlanRepo } from '@/feature/day-plan/infra/in-memory-day-plan-repo';
-import { inMemoryTaskRepo } from '@/shared/task/infra/in-memory-task-repo';
 import { ScheduleTask } from '@/feature/day-plan/application/port/in/schedule-task';
 import { ScheduleTaskUseCase } from '@/feature/day-plan/application/use-case/schedule-task-use-case';
+import { JsonTaskRepo } from '@/shared/task/infra/json-task-repo';
 
 export class DayPlanController {
     constructor(
@@ -23,9 +23,10 @@ export class DayPlanController {
 }
 
 const dayPlanRepo = new InMemoryDayPlanRepo();
+const taskRepo = new JsonTaskRepo();
 
 const getDayPlan = new GetDayPlanUseCase(dayPlanRepo);
-const scheduleTask = new ScheduleTaskUseCase(getDayPlan, inMemoryTaskRepo, dayPlanRepo);
+const scheduleTask = new ScheduleTaskUseCase(getDayPlan, taskRepo, dayPlanRepo);
 
 export const dayPlanController = new DayPlanController(
     getDayPlan,

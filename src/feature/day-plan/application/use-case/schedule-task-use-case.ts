@@ -18,6 +18,10 @@ export class ScheduleTaskUseCase implements ScheduleTask {
         const task = await this.taskRepo.getById(taskId);
         if (!task) {
             return nok('There is no such task.');
+        } else if (task.category === 'recurring') {
+            return nok('Invalid task type for this operation.');
+        } else if (task.plannedFor) {
+            return nok(`Task is already planned for ${task.plannedFor}`);
         }
 
         const planResult = await this.getDayPlan.execute(localDate, userId);
@@ -30,6 +34,11 @@ export class ScheduleTaskUseCase implements ScheduleTask {
 
         const updated = { ...plan, entries: [ ...plan.entries, newEntry ]};
         await this.dayPlanRepo.upsert(updated);
+        await this.taskRepo.upsert({
+            ...task,
+            plannedFor: localDate,
+            updatedAt: new Date().toISOString()
+        });
 
         return ok(updated);
     }

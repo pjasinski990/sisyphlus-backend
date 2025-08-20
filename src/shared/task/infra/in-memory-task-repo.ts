@@ -21,5 +21,3 @@ export class InMemoryTaskRepo implements TaskRepo {
         return this.tasks.find(t => t.id === id) ?? null;
     }
 }
-
-export const inMemoryTaskRepo = new InMemoryTaskRepo();

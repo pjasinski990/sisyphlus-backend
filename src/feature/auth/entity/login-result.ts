@@ -7,4 +7,4 @@ export interface AuthData {
     refreshToken: string;
 }
 
-export type LoginResult = Result<AuthData, string>
+export type LoginResult = Result<string, AuthData>

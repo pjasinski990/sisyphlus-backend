@@ -1,14 +1,14 @@
 import { CreateTask } from '@/shared/task/application/ports/in/create-task';
 import { Task } from '@/shared/task/entity/task';
 import { TaskRepo } from '@/shared/task/application/ports/out/task-repo';
-import { nok, ok, Result } from '@/shared/util/entity/result';
+import { AsyncResult, nok, ok } from '@/shared/util/entity/result';
 
 export class CreateTaskUseCase implements CreateTask {
     constructor(
         private readonly repo: TaskRepo,
     ) { }
 
-    async execute(task: Task): Promise<Result<Task, string>> {
+    async execute(task: Task): AsyncResult<string, Task> {
         const updatedTask: Task = {
             ...task,
             createdAt: new Date().toISOString(),

@@ -9,7 +9,7 @@ export interface JwtAuthenticatedData extends AuthenticatedData {
     payload: AccessTokenPayload;
     expired: boolean;
 }
-export type AuthVerifyResult = Result<AuthenticatedData, string>
+export type AuthVerifyResult = Result<string, AuthenticatedData>
 
 export type CreateAccessTokenStrategy = (ownerId: string) => Promise<string>;
 export type VerifyAccessTokenStrategy = (token: string) => Promise<AuthVerifyResult>;

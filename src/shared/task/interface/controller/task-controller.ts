@@ -1,8 +1,7 @@
 import { CreateTask } from '@/shared/task/application/ports/in/create-task';
 import { CreateTaskUseCase } from '@/shared/task/application/use-case/create-task-use-case';
 import { Task } from '@/shared/task/entity/task';
-import { ok, Result } from '@/shared/util/entity/result';
-import { GetInboxTasksUseCase } from '@/feature/inbox/application/use-case/get-inbox-tasks-use-case';
+import { AsyncResult, ok } from '@/shared/util/entity/result';
 import { JsonTaskRepo } from '@/shared/task/infra/json-task-repo';
 import { TaskRepo } from '@/shared/task/application/ports/out/task-repo';
 import { logger } from '@/shared/feature/logging/interface/controller/logging-controller';
@@ -13,11 +12,11 @@ export class TaskController {
         private readonly createTask: CreateTask,
     ) { }
 
-    async handleCreateNewTask(task: Task): Promise<Result<Task, string>> {
-        return await this.createTask.execute(task);
+    async handleCreateNewTask(task: Task): AsyncResult<string, Task> {
+        return this.createTask.execute(task);
     }
 
-    async handleGetByIds(userId: string, ids: string[]): Promise<Result<Task[], string>> {
+    async handleGetByIds(userId: string, ids: string[]): AsyncResult<string, Task[]> {
         logger.warn(`Retrieving by ids: ${ids}`);
         // TODO move to usecase
         const tasks = await this.taskRepo.getByUserId(userId);

@@ -1,5 +1,5 @@
 import { GetInboxTasks } from '@/feature/inbox/application/ports/in/get-inbox-tasks';
-import { ok, Result } from '@/shared/util/entity/result';
+import { AsyncResult, ok } from '@/shared/util/entity/result';
 import { TaskRepo } from '@/shared/task/application/ports/out/task-repo';
 import { Task } from '@/shared/task/entity/task';
 
@@ -8,7 +8,7 @@ export class GetInboxTasksUseCase implements GetInboxTasks {
         private readonly repo: TaskRepo
     ) { }
 
-    async execute(userId: string): Promise<Result<Task[], string>> {
+    async execute(userId: string): AsyncResult<string, Task[]> {
         const tasks: Task[] = await this.repo.getByUserId(userId);
         const inboxTasks = tasks.filter(t => {
             if (t.category === 'simple') {

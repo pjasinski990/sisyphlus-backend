@@ -19,19 +19,19 @@ export class JsonUserRepo implements UserRepo {
             users.push(user);
         }
         await this.writeAll(users);
-        return Promise.resolve(user);
+        return user;
     }
 
     async getByEmail(email: string): Promise<User | null> {
         const users = await this.readAll();
         const user = users.find(s => s.email === email);
-        return Promise.resolve(user ?? null);
+        return user ?? null;
     }
 
     async getById(id: string): Promise<User | null> {
         const users = await this.readAll();
         const user = users.find(s => s.id === id);
-        return Promise.resolve(user ?? null);
+        return user ?? null;
     }
 
     private async ensureFileExists() {

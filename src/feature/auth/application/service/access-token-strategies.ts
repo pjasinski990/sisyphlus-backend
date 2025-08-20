@@ -65,7 +65,6 @@ function validatePayload(data: unknown): AccessTokenPayload {
     return parseResult.data;
 }
 
-// TODO pull from config?
 const fifteenMinutesMs = 15 * 60 * 1000;
 function secureCookieOptions(): CookieOptions {
     return {

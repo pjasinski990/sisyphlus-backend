@@ -1,6 +1,6 @@
 import { ScheduleTask } from '../port/in/schedule-task';
 import { DayPlan, DayPlanEntry } from '@/feature/day-plan/entity/day-plan';
-import { nok, ok, Result } from '@/shared/util/entity/result';
+import { AsyncResult, nok, ok } from '@/shared/util/entity/result';
 import { TaskRepo } from '@/shared/task/application/ports/out/task-repo';
 import { GetDayPlan } from '@/feature/day-plan/application/port/in/get-day-plan';
 import { Task } from '@/shared/task/entity/task';
@@ -14,7 +14,7 @@ export class ScheduleTaskUseCase implements ScheduleTask {
         private readonly dayPlanRepo: DayPlanRepo,
     ) { }
 
-    async execute(localDate: string, taskId: string, userId: string): Promise<Result<DayPlan, string>> {
+    async execute(localDate: string, taskId: string, userId: string): AsyncResult<string, DayPlan> {
         const task = await this.taskRepo.getById(taskId);
         if (!task) {
             return nok('There is no such task.');

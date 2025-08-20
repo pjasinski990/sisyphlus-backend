@@ -1,6 +1,6 @@
 import { GetDayPlan } from '@/feature/day-plan/application/port/in/get-day-plan';
 import { buildEmptyDayPlan, DayPlan, DayPlanEntry } from '@/feature/day-plan/entity/day-plan';
-import { nok, ok, Result } from '@/shared/util/entity/result';
+import { AsyncResult, nok, ok } from '@/shared/util/entity/result';
 import { DayPlanRepo } from '@/feature/day-plan/application/port/out/day-plan-repo';
 import { Task } from '@/shared/task/entity/task';
 import { v4 as uuid } from 'uuid';
@@ -10,7 +10,7 @@ export class GetDayPlanUseCase implements GetDayPlan {
         private readonly repo: DayPlanRepo
     ) { }
 
-    async execute(localDate: string, userId: string): Promise<Result<DayPlan, string>> {
+    async execute(localDate: string, userId: string): AsyncResult<string, DayPlan> {
         const retrieved = await this.repo.getByLocalDate(localDate);
         const forUser = retrieved?.filter(plan => plan.userId === userId);
 

@@ -4,27 +4,25 @@ import { RefreshToken } from '@/feature/auth/entity/refresh-token';
 export class InMemoryRefreshTokenRepo implements RefreshTokenRepo {
     tokens: RefreshToken[] = [];
 
-    getByOwnerId(ownerId: string): Promise<RefreshToken[]> {
-        const result = this.tokens.filter(token => token.ownerId === ownerId);
-        return Promise.resolve(result);
+    async getByOwnerId(ownerId: string): Promise<RefreshToken[]> {
+        return this.tokens.filter(token => token.ownerId === ownerId);
     }
 
-    upsert(token: RefreshToken): Promise<RefreshToken> {
+    async upsert(token: RefreshToken): Promise<RefreshToken> {
         if (this.tokens.find(rt => rt.id === token.id)) {
             this.tokens = this.tokens.map(rt => rt.id === token.id ? token : rt);
         } else {
             this.tokens.push(token);
         }
-        return Promise.resolve(token);
+        return token;
     }
 
-    remove(id: string): Promise<void> {
+    async remove(id: string): Promise<void> {
         this.tokens = this.tokens.filter((rt) => rt.id !== id);
-        return Promise.resolve();
     }
 
-    getByHash(valueHash: string): Promise<RefreshToken | null> {
+    async getByHash(valueHash: string): Promise<RefreshToken | null> {
         const result = this.tokens.find(token => token.valueHash === valueHash);
-        return Promise.resolve(result ?? null);
+        return result ?? null;
     }
 }

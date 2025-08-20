@@ -1,6 +1,6 @@
 import { GetDayPlan } from '@/feature/day-plan/application/port/in/get-day-plan';
 import { DayPlan } from '@/feature/day-plan/entity/day-plan';
-import { Result } from '@/shared/util/entity/result';
+import { AsyncResult } from '@/shared/util/entity/result';
 import { GetDayPlanUseCase } from '@/feature/day-plan/application/use-case/get-day-plan-use-case';
 import { InMemoryDayPlanRepo } from '@/feature/day-plan/infra/in-memory-day-plan-repo';
 import { ScheduleTask } from '@/feature/day-plan/application/port/in/schedule-task';
@@ -13,11 +13,11 @@ export class DayPlanController {
         private readonly scheduleTask: ScheduleTask,
     ) { }
 
-    handleGetDayPlan(localDate: string, userId: string): Promise<Result<DayPlan, string>> {
+    handleGetDayPlan(localDate: string, userId: string): AsyncResult<string, DayPlan> {
         return this.getDayPlan.execute(localDate, userId);
     }
 
-    handleScheduleTaskForDay(localDate: string, taskId: string, userId: string): Promise<Result<DayPlan, string>> {
+    handleScheduleTaskForDay(localDate: string, taskId: string, userId: string): AsyncResult<string, DayPlan> {
         return this.scheduleTask.execute(localDate, taskId, userId);
     }
 }

@@ -1,6 +1,6 @@
-import { Result } from '@/shared/util/entity/result';
+import { AsyncResult } from '@/shared/util/entity/result';
 import { Task } from '@/shared/task/entity/task';
 
 export interface GetInboxTasks {
-    execute(userId: string): Promise<Result<Task[], string>>;
+    execute(userId: string): AsyncResult<string, Task[]>;
 }

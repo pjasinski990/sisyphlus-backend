@@ -1,5 +1,5 @@
 import { Task } from '@/shared/task/entity/task';
-import { Result } from '@/shared/util/entity/result';
+import { AsyncResult } from '@/shared/util/entity/result';
 import { GetInboxTasks } from '@/feature/inbox/application/ports/in/get-inbox-tasks';
 import { GetInboxTasksUseCase } from '@/feature/inbox/application/use-case/get-inbox-tasks-use-case';
 import { JsonTaskRepo } from '@/shared/task/infra/json-task-repo';
@@ -9,7 +9,7 @@ export class InboxController {
         private readonly getInboxTasks: GetInboxTasks,
     ) { }
 
-    async handleGetInboxTasks(userId: string): Promise<Result<Task[], string>> {
+    async handleGetInboxTasks(userId: string): AsyncResult<string, Task[]> {
         return await this.getInboxTasks.execute(userId);
     }
 }

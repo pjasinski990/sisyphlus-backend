@@ -1,6 +1,6 @@
 import { AsyncResult } from '@/shared/util/entity/result';
-import { DayPlan } from '@/feature/day-plan/entity/day-plan';
+import { Changeset } from '@/shared/util/changeset';
 
 export interface ScheduleTask {
-    execute(localDate: string, taskId: string, userId: string): AsyncResult<string, DayPlan>;
+    execute(localDate: string, taskId: string, userId: string): AsyncResult<string, Changeset>;
 }

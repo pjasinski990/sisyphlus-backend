@@ -6,6 +6,7 @@ import { GetDayPlan } from '@/feature/day-plan/application/port/in/get-day-plan'
 import { Task } from '@/shared/feature/task/entity/task';
 import { v4 as uuid } from 'uuid';
 import { DayPlanRepo } from '@/feature/day-plan/application/port/out/day-plan-repo';
+import { Changeset } from '@/shared/util/changeset';
 
 export class ScheduleTaskUseCase implements ScheduleTask {
     constructor(
@@ -14,7 +15,7 @@ export class ScheduleTaskUseCase implements ScheduleTask {
         private readonly dayPlanRepo: DayPlanRepo,
     ) { }
 
-    async execute(localDate: string, taskId: string, userId: string): AsyncResult<string, DayPlan> {
+    async execute(localDate: string, taskId: string, userId: string): AsyncResult<string, Changeset> {
         const task = await this.taskRepo.getById(taskId);
         if (!task) {
             return nok('There is no such task.');
@@ -40,7 +41,20 @@ export class ScheduleTaskUseCase implements ScheduleTask {
             updatedAt: new Date().toISOString()
         });
 
-        return ok(updated);
+        const changeset: Changeset = [
+            {
+                kind: 'collection',
+                collection: 'task',
+                upsert: [task]
+            },
+            {
+                kind: 'collection',
+                collection: 'day-plan',
+                upsert: [updated]
+            }
+        ];
+
+        return ok(changeset);
     }
 }
 

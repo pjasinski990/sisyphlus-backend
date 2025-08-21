@@ -6,6 +6,7 @@ import { InMemoryDayPlanRepo } from '@/feature/day-plan/infra/in-memory-day-plan
 import { ScheduleTask } from '@/feature/day-plan/application/port/in/schedule-task';
 import { ScheduleTaskUseCase } from '@/feature/day-plan/application/use-case/schedule-task-use-case';
 import { JsonTaskRepo } from '@/shared/feature/task/infra/json-task-repo';
+import { Changeset } from '@/shared/util/changeset';
 
 export class DayPlanController {
     constructor(
@@ -17,7 +18,7 @@ export class DayPlanController {
         return this.getDayPlan.execute(localDate, userId);
     }
 
-    handleScheduleTaskForDay(localDate: string, taskId: string, userId: string): AsyncResult<string, DayPlan> {
+    handleScheduleTaskForDay(localDate: string, taskId: string, userId: string): AsyncResult<string, Changeset> {
         return this.scheduleTask.execute(localDate, taskId, userId);
     }
 }

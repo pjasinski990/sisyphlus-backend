@@ -1,6 +1,5 @@
 import { LoginResult } from '@/feature/auth/entity/login-result';
 import { RegisterResult } from '@/feature/auth/entity/register-result';
-import { InMemoryRefreshTokenRepo } from '@/feature/auth/infra/in-memory-refresh-token-repo';
 import { LoginAttempt } from '@/feature/auth/application/port/in/login-attempt';
 import { RegisterAttempt } from '@/feature/auth/application/port/in/register-attempt';
 import { RefreshTokenService } from '@/feature/auth/application/service/refresh-token-service';
@@ -16,6 +15,7 @@ import { LogoutUser } from '@/feature/auth/application/port/in/logout-user';
 import { LogoutUserUseCase } from '@/feature/auth/application/use-case/logout-user';
 import { LogoutResult } from '@/feature/auth/entity/logout-result';
 import { JsonUserRepo } from '@/feature/auth/infra/json-user-repo';
+import { JsonRefreshTokenRepo } from '@/feature/auth/infra/json-refresh-token-repo';
 
 export class AuthController {
     constructor(
@@ -48,7 +48,7 @@ export class AuthController {
 }
 
 const userRepo = new JsonUserRepo();
-const tokenRepo = new InMemoryRefreshTokenRepo();
+const tokenRepo = new JsonRefreshTokenRepo();
 const authDescription = getAuthDescription();
 const refreshTokenService = new RefreshTokenService(tokenRepo, authDescription.createRefreshToken);
 

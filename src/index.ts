@@ -10,6 +10,7 @@ import { accessLogger } from '@/middleware/access-logs';
 import { inboxRoutes } from '@/feature/inbox/interface/web/inbox-routes';
 import { dayPlanRoutes } from '@/feature/day-plan/interface/web/day-plan-routes';
 import { taskRoutes } from '@/shared/feature/task/interface/web/task-routes';
+import { timeblockRoutes } from '@/feature/timeblocks/interface/web/timeblock-routes';
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -29,6 +30,7 @@ app.use(auth);
 app.use('/api/inbox', inboxRoutes);
 app.use('/api/task', taskRoutes);
 app.use('/api/day-plan', dayPlanRoutes);
+app.use('/api/timeblock', timeblockRoutes);
 
 app.use(expressErrorHandler);
 

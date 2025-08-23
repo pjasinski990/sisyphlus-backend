@@ -1,6 +1,7 @@
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { FlatCompat } from '@eslint/eslintrc';
+import boundaries from "eslint-plugin-boundaries";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -10,6 +11,81 @@ const compat = new FlatCompat({
 });
 
 const config = [
+    {
+        settings: {
+            react: { version: "detect" },
+            "boundaries/elements": [
+                { type: "shared", pattern: "src/shared/**" },
+                { type: "app-init", pattern: "src/app-init/**" },
+                {
+                    type: "feature-interface",
+                    mode: "folder",
+                    pattern: "src/feature/*/interface/**",
+                    capture: ["feature"],
+                },
+                {
+                    type: "feature",
+                    mode: "folder",
+                    pattern: "src/feature/*/**",
+                    capture: ["feature"],
+                },
+                { type: "src", pattern: "src/**" },
+            ],
+        },
+        plugins: { boundaries },
+        rules: {
+            "boundaries/no-unknown-files": "error",
+            "boundaries/no-ignored": "error",
+            "boundaries/no-unknown": "error",
+
+            "boundaries/element-types": [
+                "error",
+                {
+                    default: "disallow",
+                    rules: [
+                        // everyone can import shared
+                        { from: "*", allow: ["shared"] },
+
+                        // shared -> only shared
+                        { from: "shared", allow: ["shared"] },
+
+                        // feature internals can import shared and itself
+                        {
+                            from: [["feature", { feature: "*" }]],
+                            allow: [
+                                ["feature", { feature: "${from.feature}" }],
+                                ["feature-interface", { feature: "${from.feature}" }],
+                                "shared",
+                            ],
+                        },
+
+                        // feature interface can import shared and its own internals/interface
+                        {
+                            from: [["feature-interface", { feature: "*" }]],
+                            allow: [
+                                ["feature", { feature: "${from.feature}" }],
+                                ["feature-interface", { feature: "${from.feature}" }],
+                                "shared",
+                            ],
+                        },
+
+                        // only app-init can import features, and only via /interface/**
+                        {
+                            from: "app-init",
+                            allow: ["shared", "feature-interface"],
+                        },
+
+                        // anywhere else in src cannot import features directly
+                        {
+                            from: "src",
+                            allow: ["app-init"],
+                            disallow: ["feature", "feature-interface"],
+                        }
+                    ],
+                },
+            ],
+        },
+    },
     ...compat.extends(
         'plugin:@typescript-eslint/recommended',
     ),
@@ -36,6 +112,12 @@ const config = [
     {
         ignores: [
             '**/node_modules/**',
+            "**/dist/**",
+            "**/build/**",
+            "**/.vite/**",
+            "vitest.*",
+            "vite.*",
+            "eslint.config.mjs"
         ]
     }
 ];

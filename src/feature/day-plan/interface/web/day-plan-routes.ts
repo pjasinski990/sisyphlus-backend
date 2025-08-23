@@ -11,7 +11,7 @@ dayPlanRoutes.get('/:localDate', async (req, res) => {
         throw new UnauthorizedError();
     }
     const localDate = req.params.localDate;
-    const result = await dayPlanController.handleGetDayPlan(localDate, userId);
+    const result = await dayPlanController.handleGetByLocalDate(localDate, userId);
     if (!result.ok) {
         throw new ValidationError(`${result.error}`);
     }

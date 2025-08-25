@@ -2,6 +2,7 @@ import { UnauthorizedError, ValidationError } from '@/shared/util/entity/http-er
 import { Router } from 'express';
 import { ScheduleBlockDesc } from '@/feature/timeblocks/entity/schedule-block-description';
 import { timeblockController } from '@/feature/timeblocks/interface/controller/timeblock-controller';
+import { UpdateBlockPayload, UpdateBlockPayloadSchema } from '@/feature/timeblocks/entity/timeblock';
 
 export const timeblockRoutes = Router();
 
@@ -11,6 +12,17 @@ timeblockRoutes.post('/', async (req, res) => {
 
     const payload = validatePostBlockPayload(req.body);
     const result = await timeblockController.handleScheduleTimeblock(userId, payload);
+
+    if (!result.ok) throw new ValidationError(`${result.error}`);
+    res.json(result.value);
+});
+
+timeblockRoutes.put('/', async (req, res) => {
+    const userId = req.authToken?.userId;
+    if (!userId) throw new UnauthorizedError();
+
+    const payload = validateUpdateBlockPayload(req.body);
+    const result = await timeblockController.handleUpdateTimeblock(userId, payload);
 
     if (!result.ok) throw new ValidationError(`${result.error}`);
     res.json(result.value);
@@ -55,4 +67,12 @@ function validatePostBlockPayload(data: unknown): ScheduleBlockDesc {
         throw new ValidationError('Malformed payload', parseResult.error.flatten());
     }
     return parseResult.data;
+}
+
+function validateUpdateBlockPayload(data: unknown): UpdateBlockPayload {
+    const parsed = UpdateBlockPayloadSchema.safeParse(data);
+    if (!parsed.success) {
+        throw new ValidationError('Malformed payload', parsed.error.flatten());
+    }
+    return parsed.data;
 }

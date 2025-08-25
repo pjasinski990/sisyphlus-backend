@@ -48,6 +48,22 @@ export const TagBlockSchema = BaseBlockSchema.extend({
     resolvedTaskId: z.string().optional(),
 });
 
+export const UpdateBlockPayloadSchema = z.object({
+    id: z.string().min(1),
+    localDate: ISODate.optional(),
+    localTime: HHmm.optional(),
+    timezone: IANATimezone.optional(),
+    duration: ISODuration.optional(),
+    progressNote: z.string().optional(),
+    artifactUrl: z.string().url().optional(),
+    cancelledAt: ISOInstantUTC.optional(),
+    completedAt: ISOInstantUTC.optional(),
+}).refine(
+    (p) =>
+        !!(p.localDate || p.localTime || p.timezone || p.duration || p.progressNote || p.artifactUrl || p.cancelledAt || p.completedAt),
+    { message: 'Empty patch' }
+);
+
 export const BlockSchema = z.discriminatedUnion('category', [
     TaskBlockSchema,
     TagBlockSchema,
@@ -57,3 +73,4 @@ export type BaseBlock = z.infer<typeof BaseBlockSchema>;
 export type TaskBlock = z.infer<typeof TaskBlockSchema>;
 export type TagBlock = z.infer<typeof TagBlockSchema>;
 export type Timeblock = z.infer<typeof BlockSchema>;
+export type UpdateBlockPayload = z.infer<typeof UpdateBlockPayloadSchema>;

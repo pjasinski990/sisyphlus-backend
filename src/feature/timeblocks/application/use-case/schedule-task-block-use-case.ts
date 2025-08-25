@@ -2,7 +2,7 @@ import { ScheduleTaskBlock } from '@/feature/timeblocks/application/ports/in/sch
 import { AsyncResult, nok, ok } from '@/shared/util/entity/result';
 import { TaskBlock } from '@/feature/timeblocks/entity/timeblock';
 import { BlockRepo } from '@/feature/timeblocks/application/ports/out/block-repo';
-import { ScheduleBlockDesc, ScheduleTaskBlockDesc } from '@/feature/timeblocks/entity/schedule-block-description';
+import { ScheduleBlockBaseDesc, ScheduleTaskBlockDesc } from '@/feature/timeblocks/entity/schedule-block-description';
 import { v4 as uuid } from 'uuid';
 import { DateTime, Duration } from 'luxon';
 
@@ -40,7 +40,7 @@ export class ScheduleTaskBlockUseCase implements ScheduleTaskBlock {
     }
 }
 
-export function buildUtcInstants({ startLocalDate, startLocalTime, timezone, duration, }: ScheduleBlockDesc) {
+export function buildUtcInstants({ startLocalDate, startLocalTime, timezone, duration, }: ScheduleBlockBaseDesc) {
     const startZoned = DateTime.fromISO(`${startLocalDate}T${startLocalTime}`, { zone: timezone });
     if (!startZoned.isValid) throw new Error(`Invalid local date/time/timezone: ${startZoned.invalidReason}`);
 

@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { IANATimezone, ISODate, ISODuration } from '@/feature/timeblocks/entity/timeblock';
+import { IANATimezone, ISODate, ISODuration } from '@/feature/timeblocks/entity/block';
 import { HHmm } from '@/shared/feature/task/entity/task';
 
 export const ScheduleBlockBaseDesc = z.object({

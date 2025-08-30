@@ -72,5 +72,5 @@ export const BlockSchema = z.discriminatedUnion('category', [
 export type BaseBlock = z.infer<typeof BaseBlockSchema>;
 export type TaskBlock = z.infer<typeof TaskBlockSchema>;
 export type TagBlock = z.infer<typeof TagBlockSchema>;
-export type Timeblock = z.infer<typeof BlockSchema>;
+export type Block = z.infer<typeof BlockSchema>;
 export type UpdateBlockPayload = z.infer<typeof UpdateBlockPayloadSchema>;

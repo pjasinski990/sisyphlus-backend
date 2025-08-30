@@ -2,7 +2,7 @@ import { UnauthorizedError, ValidationError } from '@/shared/util/entity/http-er
 import { Router } from 'express';
 import { ScheduleBlockDesc } from '@/feature/timeblocks/entity/schedule-block-description';
 import { timeblockController } from '@/feature/timeblocks/interface/controller/timeblock-controller';
-import { UpdateBlockPayload, UpdateBlockPayloadSchema } from '@/feature/timeblocks/entity/timeblock';
+import { UpdateBlockPayload, UpdateBlockPayloadSchema } from '@/feature/timeblocks/entity/block';
 
 export const timeblockRoutes = Router();
 
@@ -41,6 +41,18 @@ timeblockRoutes.get('/:localDate', async (req, res) => {
     res.json(result.value);
 });
 
+timeblockRoutes.delete('/:id', async (req, res) => {
+    const userId = req.authToken?.userId;
+    if (!userId) throw new UnauthorizedError();
+
+    const blockId = req.params.id;
+    if (!blockId) throw new ValidationError('Block ID is required');
+
+    const result = await timeblockController.handleRemoveTimeblock(userId, blockId);
+
+    if (!result.ok) throw new ValidationError(`${result.error}`);
+    res.json(result.value);
+});
 
 timeblockRoutes.get('/', async (req, res) => {
     const userId = req.authToken?.userId;

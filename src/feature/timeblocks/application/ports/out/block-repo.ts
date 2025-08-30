@@ -1,9 +1,10 @@
-import { Timeblock } from '@/feature/timeblocks/entity/timeblock';
+import { Block } from '@/feature/timeblocks/entity/block';
 
 export interface BlockRepo {
-    upsert<T extends Timeblock>(block: T): Promise<T>;
-    getByUserId(userId: string): Promise<Timeblock[]>;
-    getById(userId: string, id: string): Promise<Timeblock | null>;
-    getByIds(userId: string, ids: string[]): Promise<Timeblock[]>;
-    getByLocalDate(userId: string, localDate: string): Promise<Timeblock[]>;
+    upsert<T extends Block>(block: T): Promise<T>;
+    getByUserId(userId: string): Promise<Block[]>;
+    getById(userId: string, id: string): Promise<Block | null>;
+    getByIds(userId: string, ids: string[]): Promise<Block[]>;
+    getByLocalDate(userId: string, localDate: string): Promise<Block[]>;
+    removeById(userId: string, id: string): Promise<Block | null>;
 }

@@ -1,6 +1,6 @@
 import { ScheduleTaskBlock } from '@/feature/timeblocks/application/ports/in/schedule-task-block';
 import { AsyncResult, nok, ok } from '@/shared/util/entity/result';
-import { TaskBlock } from '@/feature/timeblocks/entity/timeblock';
+import { TaskBlock } from '@/feature/timeblocks/entity/block';
 import { BlockRepo } from '@/feature/timeblocks/application/ports/out/block-repo';
 import { ScheduleBlockBaseDesc, ScheduleTaskBlockDesc } from '@/feature/timeblocks/entity/schedule-block-description';
 import { v4 as uuid } from 'uuid';

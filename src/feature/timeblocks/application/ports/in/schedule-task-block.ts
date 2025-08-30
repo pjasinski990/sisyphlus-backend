@@ -1,4 +1,4 @@
-import { TaskBlock } from '@/feature/timeblocks/entity/timeblock';
+import { TaskBlock } from '@/feature/timeblocks/entity/block';
 import { AsyncResult } from '@/shared/util/entity/result';
 import { ScheduleTaskBlockDesc } from '@/feature/timeblocks/entity/schedule-block-description';
 

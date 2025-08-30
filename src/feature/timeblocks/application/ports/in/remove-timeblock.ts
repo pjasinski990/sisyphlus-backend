@@ -1,6 +1,6 @@
 import { AsyncResult } from '@/shared/util/entity/result';
 import { Block } from '@/feature/timeblocks/entity/block';
 
-export interface GetTimeblocksByLocalDate {
-    execute(userId: string, localDate: string): AsyncResult<string, Block[]>
+export interface RemoveTimeblock {
+    execute(userId: string, blockId: string): AsyncResult<string, Block>
 }

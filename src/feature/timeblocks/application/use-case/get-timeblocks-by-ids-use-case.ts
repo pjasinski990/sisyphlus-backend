@@ -1,5 +1,5 @@
 import { AsyncResult, ok } from '@/shared/util/entity/result';
-import { Timeblock } from '@/feature/timeblocks/entity/timeblock';
+import { Block } from '@/feature/timeblocks/entity/block';
 import { BlockRepo } from '@/feature/timeblocks/application/ports/out/block-repo';
 import { GetTimeblocksByIds } from '@/feature/timeblocks/application/ports/in/get-timeblocks-by-ids';
 
@@ -8,7 +8,7 @@ export class GetTimeblocksByIdsUseCase implements GetTimeblocksByIds {
         private readonly repo: BlockRepo,
     ) { }
 
-    async execute(userId: string, ids: string[]): AsyncResult<string, Timeblock[]> {
+    async execute(userId: string, ids: string[]): AsyncResult<string, Block[]> {
         const result = await this.repo.getByIds(userId, ids);
         return ok(result);
     }

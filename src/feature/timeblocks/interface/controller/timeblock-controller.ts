@@ -15,6 +15,12 @@ import { UpdateTimeblock } from '@/feature/timeblocks/application/ports/in/updat
 import { UpdateTimeblockUseCase } from '@/feature/timeblocks/application/use-case/update-timeblock-use-case';
 import { RemoveTimeblock } from '@/feature/timeblocks/application/ports/in/remove-timeblock';
 import { RemoveTimeblockUseCase } from '@/feature/timeblocks/application/use-case/remove-timeblock-use-case';
+import { CompleteTimeblockUseCase } from '@/feature/timeblocks/application/use-case/complete-timeblock-use-case';
+import { JsonTaskRepo } from '@/shared/feature/task/infra/json-task-repo';
+import {
+    BlockCompletedResponse,
+    CompleteTimeblock
+} from '@/feature/timeblocks/application/ports/in/complete-timeblock';
 
 export class TimeblockController {
     constructor(
@@ -23,6 +29,7 @@ export class TimeblockController {
         private readonly getTimeblocksByLocalDate: GetTimeblocksByLocalDate,
         private readonly getTimeblocksByIds: GetTimeblocksByIds,
         private readonly removeTimeblock: RemoveTimeblock,
+        private readonly completeTimeblock: CompleteTimeblock,
     ) { }
 
     async handleScheduleTimeblock(userId: string, desc: ScheduleBlockDesc): AsyncResult<string, TaskBlock> {
@@ -47,14 +54,21 @@ export class TimeblockController {
     async handleRemoveTimeblock(userId: string, blockId: string): AsyncResult<string, Block> {
         return this.removeTimeblock.execute(userId, blockId);
     }
+
+    async handleCompleteTimeblock(userId: string, blockId: string, completeTask: boolean, note?: string): AsyncResult<string, BlockCompletedResponse> {
+        return this.completeTimeblock.execute(userId, blockId, completeTask, note);
+    }
 }
 
 const blockRepo = new JsonBlockRepo();
+const taskRepo = new JsonTaskRepo();
+
 const scheduleTaskBlock = new ScheduleTaskBlockUseCase(blockRepo);
 const updateTimeblock = new UpdateTimeblockUseCase(blockRepo);
 const getTimeblocksByLocalDate = new GetTimeblocksByLocalDateUseCase(blockRepo);
 const getTimeblocksByIds = new GetTimeblocksByIdsUseCase(blockRepo);
 const removeTimeblock = new RemoveTimeblockUseCase(blockRepo);
+const completeTimeblock = new CompleteTimeblockUseCase(blockRepo, taskRepo);
 
 export const timeblockController = new TimeblockController(
     scheduleTaskBlock,
@@ -62,4 +76,5 @@ export const timeblockController = new TimeblockController(
     getTimeblocksByLocalDate,
     getTimeblocksByIds,
     removeTimeblock,
+    completeTimeblock,
 );

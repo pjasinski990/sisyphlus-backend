@@ -27,9 +27,9 @@ export class JsonTaskRepo implements TaskRepo {
         return tasks.filter(t => t.userId === userId);
     }
 
-    async getById(id: string): Promise<Task | null> {
+    async getById(userId: string, id: string): Promise<Task | null> {
         const tasks = await this.readAll();
-        return tasks.find(t => t.id === id) ?? null;
+        return tasks.find(t => t.id === id && t.userId === userId) ?? null;
     }
 
     private async ensureFileExists() {

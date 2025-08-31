@@ -1,4 +1,4 @@
-import { ScheduleTask } from '../port/in/schedule-task';
+import { ScheduleTask } from '@/feature/day-plan/application/port/in/schedule-task';
 import { DayPlan, DayPlanEntry } from '@/feature/day-plan/entity/day-plan';
 import { AsyncResult, nok, ok } from '@/shared/util/entity/result';
 import { TaskRepo } from '@/shared/feature/task/application/ports/out/task-repo';
@@ -16,7 +16,7 @@ export class ScheduleTaskUseCase implements ScheduleTask {
     ) { }
 
     async execute(localDate: string, taskId: string, userId: string): AsyncResult<string, Changeset> {
-        const task = await this.taskRepo.getById(taskId);
+        const task = await this.taskRepo.getById(userId, taskId);
         if (!task) {
             return nok('There is no such task.');
         } else if (task.category === 'recurring') {
